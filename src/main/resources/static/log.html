@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>CPU Hoarder Logs</title>
+    <style>
+        body {
+            font-family: Consolas, monospace;
+            padding: 0 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: black;
+            color: lawngreen;
+        }
+    </style>
+</head>
+<body>
+<h1>CPU Hoarder Log</h1>
+<script>
+    var source = new EventSource('/log/stream');
+    source.onmessage = function (ev) {
+        console.log(ev.data);
+        document.body.innerHTML += ev.data + '<br>';
+    };
+    source.onerror = function () {
+        source.close();
+        var msg = 'Connection to /log/stream closed!';
+        console.error(msg);
+        document.body.innerHTML += '<br>' + msg;
+    };
+</script>
+</body>
+</html>
