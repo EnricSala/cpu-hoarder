@@ -22,8 +22,11 @@ class PassmarkService(private val passmark: PassmarkClient,
             cpuRepository.save(
                     Cpu(name = info.name, passmarkId = passmarkId))
         }
+        val scoreId = scoreRepository.findByCpuPassmarkId(passmarkId)
+                .map { it.id }.orElse(-1)
         return scoreRepository.save(
-                CpuScore(cpu = cpu, time = Date(), average = info.average,
+                CpuScore(id = scoreId, cpu = cpu,
+                        time = Date(), average = info.average,
                         singleThread = info.singleThread, samples = info.samples))
     }
 
