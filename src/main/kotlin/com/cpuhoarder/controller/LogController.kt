@@ -1,5 +1,6 @@
 package com.cpuhoarder.controller
 
+import com.cpuhoarder.service.logging.LogEvent
 import com.cpuhoarder.service.logging.LoggingBus
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
@@ -16,6 +17,6 @@ class LogController {
     fun display(): Resource = ClassPathResource("static/log.html")
 
     @GetMapping("/stream")
-    fun stream(): Flux<String> = LoggingBus.observe()
+    fun stream(): Flux<LogEvent> = LoggingBus.observe()
 
 }
